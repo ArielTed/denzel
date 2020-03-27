@@ -2,7 +2,10 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const pLimit = require('p-limit');
 const pSettle = require('p-settle');
-const {IMDB_NAME_URL, IMDB_URL, P_LIMIT} = require('./constants');
+
+const IMDB_NAME_URL = process.env.IMDB_NAME_URL || 'https://www.imdb.com/name';
+const IMDB_URL = process.env.IMDB_URL || 'https://www.imdb.com';
+const P_LIMIT = process.env.P_LIMIT || 25;
 
 /**
  * Get filmography for a given actor
@@ -71,7 +74,15 @@ const getMovie = async link => {
  * @return {Array}
  */
 module.exports = async actor => {
-  const limit = pLimit(P_LIMIT);
+	const limit = pLimit(P_LIMIT);
+
+	try {
+		await axios(`${IMDB_NAME_URL}/${actor}`);
+	}
+	catch (err) {
+		throw err;
+	}
+
   const filmography = await getFilmography(actor);
 
   const promises = filmography.map(filmo => {

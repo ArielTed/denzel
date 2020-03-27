@@ -5,14 +5,14 @@ const METASCORE = 77;
 
 async function start (actor = DENZEL_IMDB_ID, metascore = METASCORE) {
   try {
-    console.log(`📽️  fetching filmography of ${actor}...`);
+    console.log(`📽️  fetching filmography of Denzel Washington (IMDB_ID: ${actor})...`);
     const movies = await imdb(actor);
     const awesome = movies.filter(movie => movie.metascore >= metascore);
 
     console.log(`🍿 ${movies.length} movies found.`);
-    console.log(JSON.stringify(movies, null, 2));
+    console.log(movies);
     console.log(`🥇 ${awesome.length} awesome movies found.`);
-    console.log(JSON.stringify(awesome, null, 2));
+    console.log(awesome);
     process.exit(0);
   } catch (e) {
     console.error(e);

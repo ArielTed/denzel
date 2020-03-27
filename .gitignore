@@ -182,3 +182,10 @@ build/
 dist
 
 exports
+
+.env
+*.orig
+.idea/
+.vscode/
+
+package-lock.json
